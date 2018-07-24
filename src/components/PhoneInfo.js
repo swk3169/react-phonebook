@@ -42,6 +42,17 @@ class PhoneInfo extends Component {
         });
     }
 
+    shouldComponentUpdate(nextProps, nextState) {
+        // 수정 상태가 아니고, info 값이 같다면 리렌더링 안함
+        if (!this.state.editing
+            && !nextState.editing
+            && nextProps.info === this.props.info) {
+            return false;
+        }
+        // 나머지 경우엔 리렌더링 함
+        return true;
+    }
+
     componentDidUpdate(prevProps, prevState) {
         // editing 값이 바뀔 때 처리할 로직이 적혀있다.
         // 수정을 눌렀을 땐, 기존의 값이 input에 나타나고,
@@ -107,6 +118,7 @@ class PhoneInfo extends Component {
         } = this.props.info;
 
         return (
+            console.log('render PhoneInfo ' + this.props.info.id),
             <div style={style}>
                 <div><b>{name}</b></div>
                 <div>{phone}</div>
